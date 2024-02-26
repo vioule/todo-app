@@ -1,0 +1,13 @@
+services:
+  nodejs:
+    image: todoapp-image
+    container_name: todoapp-container
+    build: .
+    volumes:
+      - .:/root/todo-app
+      - /root/todo-app/node_modules
+      - /root/todo-app/.next
+    ports:
+      - "3000:3000"
+    tty: true
+    stdin_open: true
