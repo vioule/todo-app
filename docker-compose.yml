@@ -1,3 +1,4 @@
+version: "3.1"
 services:
   nodejs:
     image: todoapp-image
@@ -11,3 +12,18 @@ services:
       - "3000:3000"
     tty: true
     stdin_open: true
+  mongodb:
+    image: mongo:6.0.13
+    container_name: todoapp-mongodb-container
+    volumes:
+      - "./mongo.setup.js:/docker-entrypoint-initdb.d/mongo.setup.js"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_ROOT_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD}
+      MONGO_APP_USERNAME: ${MONGO_APP_USERNAME}
+      MONGO_APP_PASSWORD: ${MONGO_APP_PASSWORD}
+      MONGO_INITDB_DATABASE: ${MONGO_DATABASE}
+    networks:
+      default:
+        aliases:
+          - todoapp-database

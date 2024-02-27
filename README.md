@@ -1,3 +1,24 @@
+## Prerequisites
+
+Create an .env file inside root project and add the following const to the file :
+
+```
+MONGO_ROOT_USERNAME ## root username for your mongo container ##
+MONGO_ROOT_PASSWORD ## password for your mongo container ##
+MONGO_APP_USERNAME ## app username to connect to the database ##
+MONGO_APP_PASSWORD ## app password to connect to the database ##
+MONGO_DATABASE ## database name ##
+DATABASE_URI ## should look like this without const names : mongodb://MONGO_APP_USERNAME:MONGO_APP_PASSWORD@todoapp-mongodb-container:27017/MONGO_DATABASE?authSource=MONGO_DATABASE ##
+```
+
+To run the project :
+
+```
+docker compose up
+```
+
+Go inside todoapp-container to start nextjs :
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
