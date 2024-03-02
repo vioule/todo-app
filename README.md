@@ -28,7 +28,7 @@ npm run build:staging
 npm run build:production
 ```
 
-To deploy in the cloud you need to set up the ENV_TARGET environment variable. ("staging" or "production")
+To deploy in the cloud you need to set up the ENV_TARGET environment variable. ("staging" or "production").
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
