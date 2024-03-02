@@ -3,11 +3,21 @@ declare global {
   var mongoose: any; // This must be a `var` and not a `let / const`
 }
 
-const DATABASE_URI = process.env.DATABASE_URI!;
+const DATABASE_URIS = {
+  development: process.env.DATABASE_URI_DEVELOPMENT!,
+  staging: process.env.DATABASE_URI_STAGING!,
+  production: process.env.DATABASE_URI_PRODUCTION!,
+};
+
+const ENV_TARGET = process.env.ENV_TARGET! as
+  | "development"
+  | "staging"
+  | "production";
+const DATABASE_URI = DATABASE_URIS[ENV_TARGET];
 
 if (!DATABASE_URI) {
   throw new Error(
-    "Please define the MONGODB_URI environment variable inside .env.local"
+    "Please define the DATABASE_URI_DEVELOPMENT, DATABASE_URI_STAGING and DATABASE_URI_PRODUCTION environment variables inside .env"
   );
 }
 
