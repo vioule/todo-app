@@ -8,7 +8,9 @@ MONGO_ROOT_PASSWORD ## password for your mongo container ##
 MONGO_APP_USERNAME ## app username to connect to the database ##
 MONGO_APP_PASSWORD ## app password to connect to the database ##
 MONGO_DATABASE ## database name ##
-DATABASE_URI ## should look like this without const names : mongodb://MONGO_APP_USERNAME:MONGO_APP_PASSWORD@todoapp-mongodb-container:27017/MONGO_DATABASE?authSource=MONGO_DATABASE ##
+DATABASE_URI_DEVELOPMENT ## should look like this without const names : mongodb://MONGO_APP_USERNAME:MONGO_APP_PASSWORD@todoapp-mongodb-container:27017/MONGO_DATABASE?authSource=MONGO_DATABASE ##
+DATABASE_URI_STAGING ## mongodb+srv://<USER>:<PASSWORD>@<CLUSTERURL>/<DATABASE>?retryWrites=true&w=majority&appName=<CLUSTERNAME> ##
+DATABASE_URI_PRODUCTION ## mongodb+srv://<USER>:<PASSWORD>@<CLUSTERURL>/<DATABASE>?retryWrites=true&w=majority&appName=<CLUSTERNAME> ##
 ```
 
 To run the project :
@@ -18,6 +20,15 @@ docker compose up
 ```
 
 Go inside todoapp-container to start nextjs :
+
+To build the project locally with staging or production environment use :
+
+```
+npm run build:staging
+npm run build:production
+```
+
+To deploy in the cloud you need to set up the ENV_TARGET environment variable. ("staging" or "production").
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
