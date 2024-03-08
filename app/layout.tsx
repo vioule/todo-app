@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
-import { Inter, Quicksand } from "next/font/google";
+import { Quicksand } from "next/font/google";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
 const quicksand = Quicksand({
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700"],
@@ -25,7 +24,7 @@ export default function RootLayout({
       className="max-sm:text-[12px] max-xl:text-[14px] text-[16px]"
     >
       <body className={`${quicksand.variable}`}>
-        <main className="flex min-h-screen flex-col items-center justify-between bg-gray-50 font-quicksand">
+        <main className="flex min-h-screen flex-col items-center justify-between bg-gray-50 font-quicksand text-black">
           {children}
         </main>
       </body>
