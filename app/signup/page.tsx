@@ -6,17 +6,20 @@ import Link from "next/link";
 import { useState } from "react";
 import { z } from "zod";
 import { SignupSchema } from "@/schemas/Login";
-import { TErrorMessage } from "@/types";
-import ErrorMessage from "@/components/form/ErrorMessage";
+import { TInfoMessage } from "@/types";
+import { ErrorMessage, SuccessMessage } from "@/components/form/InfoMessage";
 import Slogan from "@/components/login/Slogan";
 import Name from "@/components/form/Name";
 
 interface ISignupError {
-  name: TErrorMessage;
-  email: TErrorMessage;
-  verifyEmail: TErrorMessage;
-  password: TErrorMessage;
-  response: TErrorMessage;
+  name: TInfoMessage;
+  email: TInfoMessage;
+  verifyEmail: TInfoMessage;
+  password: TInfoMessage;
+  response: TInfoMessage;
+}
+interface ISignupSuccess {
+  response: TInfoMessage;
 }
 
 export default function Signup() {
@@ -25,6 +28,9 @@ export default function Signup() {
     email: null,
     verifyEmail: null,
     password: null,
+    response: null,
+  });
+  const [success, setSuccess] = useState<ISignupSuccess>({
     response: null,
   });
   const [name, setName] = useState("");
@@ -40,6 +46,16 @@ export default function Signup() {
       const data = await response.json();
       setIsLoading(false);
       if (data.user) {
+        setError({
+          name: null,
+          email: null,
+          verifyEmail: null,
+          password: null,
+          response: null,
+        });
+        setSuccess({
+          response: data.message,
+        });
         //redirect to user dashboard
       } else {
         setError({
@@ -60,7 +76,11 @@ export default function Signup() {
           response: null,
         };
         err.issues.map((e) => {
-          const path = e.path[0] as "email" | "password";
+          const path = e.path[0] as
+            | "email"
+            | "password"
+            | "verifyEmail"
+            | "name";
           ret[path] = e.message;
         });
         setError({ ...error, ...ret });
@@ -109,6 +129,7 @@ export default function Signup() {
             </Link>
           </span>
           <ErrorMessage error={error.response} />
+          <SuccessMessage success={success.response} />
         </div>
         {isLoading && (
           <div className="absolute left-0 top-0 h-full w-full flex justify-center items-center text-primary backdrop-blur-[2px] backdrop-saturate-50">

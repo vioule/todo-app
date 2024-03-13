@@ -1,10 +1,10 @@
-import { TErrorMessage } from "@/types";
+import { TInfoMessage } from "@/types";
 import { FaRegUser } from "react-icons/fa";
-import ErrorMessage from "./ErrorMessage";
+import { ErrorMessage } from "./InfoMessage";
 
 interface IName {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  error: TErrorMessage;
+  error: TInfoMessage;
 }
 
 export default function Name({ onChange, error }: IName) {

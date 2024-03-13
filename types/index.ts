@@ -1,1 +1,1 @@
-export type TErrorMessage = string | null;
+export type TInfoMessage = string | null;

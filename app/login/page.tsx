@@ -6,14 +6,14 @@ import Link from "next/link";
 import { useState } from "react";
 import { z } from "zod";
 import LoginSchema from "@/schemas/Login";
-import { TErrorMessage } from "@/types";
-import ErrorMessage from "@/components/form/ErrorMessage";
+import { TInfoMessage } from "@/types";
+import { ErrorMessage } from "@/components/form/InfoMessage";
 import Slogan from "@/components/login/Slogan";
 
 interface ILoginError {
-  email: TErrorMessage;
-  password: TErrorMessage;
-  response: TErrorMessage;
+  email: TInfoMessage;
+  password: TInfoMessage;
+  response: TInfoMessage;
 }
 
 export default function Login() {

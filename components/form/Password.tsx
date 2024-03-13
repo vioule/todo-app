@@ -1,13 +1,13 @@
 "use client";
-import { TErrorMessage } from "@/types";
+import { TInfoMessage } from "@/types";
 import { useState } from "react";
 import { MdLockOutline } from "react-icons/md";
 import { RiEyeLine, RiEyeCloseLine } from "react-icons/ri";
-import ErrorMessage from "./ErrorMessage";
+import { ErrorMessage } from "./InfoMessage";
 
 interface IPassword {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  error: TErrorMessage;
+  error: TInfoMessage;
 }
 
 export default function Password({ onChange, error }: IPassword) {

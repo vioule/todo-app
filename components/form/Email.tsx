@@ -1,10 +1,10 @@
-import { TErrorMessage } from "@/types";
+import { TInfoMessage } from "@/types";
 import { MdOutlineMail } from "react-icons/md";
-import ErrorMessage from "./ErrorMessage";
+import { ErrorMessage } from "./InfoMessage";
 
 interface IEmail {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  error: TErrorMessage;
+  error: TInfoMessage;
 }
 
 export default function Email({ onChange, error }: IEmail) {
