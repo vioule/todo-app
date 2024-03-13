@@ -2,13 +2,13 @@
 import Password from "@/components/form/Password";
 import Email from "@/components/form/Email";
 import Spinner from "@/components/icons/Spinner";
-import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { z } from "zod";
 import LoginSchema from "@/schemas/Login";
 import { TErrorMessage } from "@/types";
 import ErrorMessage from "@/components/form/ErrorMessage";
+import Slogan from "@/components/login/Slogan";
 
 interface ILoginError {
   email: TErrorMessage;
@@ -60,20 +60,7 @@ export default function Login() {
   };
   return (
     <div className="h-screen w-screen flex flex-row max-w-[1920px]">
-      <div className="relative bg-primary w-full max-lg:hidden text-white px-20 pt-24">
-        <Image
-          src={"/auth-background.png"}
-          alt="Abstract background"
-          width={3900}
-          height={3900}
-          className="absolute top-0 left-0 w-full h-full opacity-15 object-cover"
-        />
-        <div className="relative w-[4rem] h-[4rem] bg-white"></div>
-        <h1 className="text-4xl font-bold mt-10">Achieve More, Stress Less</h1>
-        <h2 className="text-xl font-light mt-4">
-          Unleash the Power of Your To-Do List.
-        </h2>
-      </div>
+      <Slogan />
       <div className="relative bg-white w-full h-full flex justify-center overflow-x-hidden">
         <div className="flex flex-col justify-center p-10 gap-2 h-full max-w-[600px] w-full min-h-[550px] max-sm:min-h-[500px]">
           <div className="w-[4rem] h-[4rem] bg-primary mb-6 hidden max-lg:block"></div>
