@@ -13,8 +13,11 @@
     "test:watch": "jest --watchAll"
   },
   "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "jose": "^5.2.3",
     "mongoose": "^8.2.0",
     "next": "14.1.0",
+    "nodemailer": "^6.9.13",
     "react": "^18",
     "react-dom": "^18",
     "react-icons": "^5.0.1",
@@ -23,8 +26,10 @@
   "devDependencies": {
     "@testing-library/jest-dom": "^6.4.2",
     "@testing-library/react": "^14.2.1",
+    "@types/bcryptjs": "^2.4.6",
     "@types/jest": "^29.5.12",
     "@types/node": "^20",
+    "@types/nodemailer": "^6.4.14",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "autoprefixer": "^10.0.1",

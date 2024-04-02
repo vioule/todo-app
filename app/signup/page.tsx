@@ -40,12 +40,15 @@ export default function Signup() {
   const [isLoading, setIsLoading] = useState(false);
   const handleOnClick = async () => {
     try {
-      const res = SignupSchema.parse({ name, email, verifyEmail, password });
+      SignupSchema.parse({ name, email, verifyEmail, password });
       setIsLoading(true);
-      const response = await fetch("/api/test-loading");
+      const response = await fetch("/api/auth/signup", {
+        method: "POST",
+        body: JSON.stringify({ email, name, password }),
+      });
       const data = await response.json();
       setIsLoading(false);
-      if (data.user) {
+      if (data.success) {
         setError({
           name: null,
           email: null,
@@ -56,14 +59,13 @@ export default function Signup() {
         setSuccess({
           response: data.message,
         });
-        //redirect to user dashboard
       } else {
         setError({
           name: null,
           email: null,
           verifyEmail: null,
           password: null,
-          response: data.message,
+          response: data.error,
         });
       }
     } catch (err) {

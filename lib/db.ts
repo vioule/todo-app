@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { ENV_TARGET } from "./constants";
 declare global {
   var mongoose: any; // This must be a `var` and not a `let / const`
 }
@@ -9,10 +10,6 @@ const DATABASE_URIS = {
   production: process.env.DATABASE_URI_PRODUCTION!,
 };
 
-const ENV_TARGET = process.env.ENV_TARGET! as
-  | "development"
-  | "staging"
-  | "production";
 const DATABASE_URI = DATABASE_URIS[ENV_TARGET];
 
 if (!DATABASE_URI) {

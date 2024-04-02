@@ -25,4 +25,13 @@ export const SignupSchema = z
     path: ["verifyEmail"],
   });
 
+export const SignupAPISchema = z.object({
+  name: z.string().min(1, { message: "Name required" }),
+  email: z
+    .string()
+    .email({ message: "Invalid email address" })
+    .min(1, { message: "Email address required" }),
+  password: z.string().min(1, { message: "Password required" }),
+});
+
 export default LoginSchema;
