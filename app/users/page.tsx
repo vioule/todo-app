@@ -18,18 +18,6 @@ export default async function Users() {
               <span>Name : </span>
               {user.name}
             </div>
-            <div>
-              <span>Email : </span>
-              {user.email}
-            </div>
-            <div>
-              <span>Email Verified : </span>
-              {user.emailVerified}
-            </div>
-            <div>
-              <span>Verify Token : </span>
-              {user.verifyToken}
-            </div>
           </div>
         );
       })}
