@@ -5,7 +5,7 @@ import * as jose from "jose";
 import { SignupAPISchema } from "@/schemas/Login";
 import dbConnect from "@/lib/db";
 import mailer from "@/lib/mail";
-import { NEXT_PUBLIC_PATH } from "@/lib/constants";
+import { JWT_SECRET, NEXT_PUBLIC_PATH } from "@/lib/constants";
 
 export async function POST(request: NextRequest) {
   try {
@@ -32,8 +32,8 @@ export async function POST(request: NextRequest) {
     const verifyToken = await new jose.SignJWT({ email })
       .setProtectedHeader({ alg: "HS256" })
       .setIssuedAt()
-      .setExpirationTime("1d")
-      .sign(new TextEncoder().encode(process.env.JWT_SECRET));
+      .setExpirationTime("1 day")
+      .sign(JWT_SECRET);
 
     const newUser = new User({
       name,

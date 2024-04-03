@@ -1,6 +1,9 @@
 import dbConnect from "@/lib/db";
 import User, { Users } from "@/models/User";
 
+//force no cache to see users
+export const dynamic = "force-dynamic";
+
 const getUsers = async (): Promise<Users[]> => {
   await dbConnect();
   const users = await User.find<Users>({});
