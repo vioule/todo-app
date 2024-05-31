@@ -58,7 +58,8 @@ export async function POST(request: NextRequest) {
       console.log(error);
     }
     return NextResponse.json({
-      message: "User created successfully",
+      message:
+        "User created successfully. You received a message in your inbox to verify your email address.",
       success: true,
     });
   } catch (error: any) {

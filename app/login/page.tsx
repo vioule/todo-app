@@ -9,6 +9,9 @@ import LoginSchema from "@/schemas/Login";
 import { TInfoMessage } from "@/types";
 import { ErrorMessage } from "@/components/form/InfoMessage";
 import Slogan from "@/components/login/Slogan";
+import { useAppDispatch } from "@/lib/store/hooks";
+import { setUser } from "@/lib/store/features/session/sessionSlice";
+import { useRouter } from "next/navigation";
 
 interface ILoginError {
   email: TInfoMessage;
@@ -17,6 +20,8 @@ interface ILoginError {
 }
 
 export default function Login() {
+  const router = useRouter();
+  const dispatch = useAppDispatch();
   const [error, setError] = useState<ILoginError>({
     email: null,
     password: null,
@@ -29,11 +34,16 @@ export default function Login() {
     try {
       const res = LoginSchema.parse({ email, password });
       setIsLoading(true);
-      const response = await fetch("/api/test-loading");
+      const response = await fetch("/api/auth/login", {
+        method: "POST",
+        body: JSON.stringify({ email, password }),
+      });
       const data = await response.json();
       setIsLoading(false);
-      if (data.user) {
+      if (data.success) {
         //redirect to user dashboard
+        dispatch(setUser(data.session.user));
+        router.push("/dashboard");
       } else {
         setError({
           email: null,
