@@ -2,6 +2,7 @@
 import { useRouter } from "next/navigation";
 import { disconnect } from "@/lib/store/features/session/sessionSlice";
 import { useAppDispatch } from "@/lib/store/hooks";
+import { HiOutlineLogin } from "react-icons/hi";
 
 export default function LogOut() {
   const router = useRouter();
@@ -19,9 +20,10 @@ export default function LogOut() {
   return (
     <button
       onClick={onLogout}
-      className="bg-blue-500 p-4 rounded-lg text-white"
+      className="p-2 w-full rounded-lg flex items-center font-semibold justify-center hover:bg-blue-50 hover:text-primary text-slate-600 tracking-wider"
     >
-      Logout
+      <HiOutlineLogin className="max-sm:h-[25px] max-sm:w-[25px] h-6 w-6" />
+      <span className="ml-2 max-sm:hidden">Logout</span>
     </button>
   );
 }

@@ -4,6 +4,8 @@ import bcrypt from "bcryptjs";
 import * as jose from "jose";
 import dbConnect from "@/lib/db";
 import User, { Users } from "@/models/User";
+import Task, { Tasks } from "@/models/Task";
+import { TTask } from "@/types";
 
 export async function POST(request: Request) {
   try {
@@ -34,6 +36,14 @@ export async function POST(request: Request) {
       .setIssuedAt()
       .setExpirationTime("1h")
       .sign(JWT_SECRET);
+
+    const tasks = (
+      await Task.find<Tasks>({ user: user.id }, "_id title description user")
+    ).map((task) => {
+      const doc: TTask = task.toJSON();
+      return { ...doc, _id: doc._id.toString() };
+    });
+
     let response = NextResponse.json({
       success: true,
       session: {
@@ -42,6 +52,7 @@ export async function POST(request: Request) {
           username: user.name,
           email: user.email,
         },
+        tasks,
       },
     });
     response.cookies.set("jwt", jwt, {

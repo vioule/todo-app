@@ -8,6 +8,7 @@ import {
   ISessionState,
   initialState,
 } from "@/lib/store/features/session/sessionSlice";
+import { overlayInitialState } from "@/lib/store/features/overlay/overlaySlice";
 
 const quicksand = Quicksand({
   subsets: ["latin"],
@@ -33,7 +34,7 @@ export default async function RootLayout({
     session = initialState;
   }
   return (
-    <StoreProvider preloadedState={{ session }}>
+    <StoreProvider preloadedState={{ session, overlay: overlayInitialState }}>
       <html
         lang="en"
         className="max-sm:text-[12px] max-xl:text-[14px] text-[16px]"

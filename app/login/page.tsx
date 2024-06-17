@@ -10,7 +10,7 @@ import { TInfoMessage } from "@/types";
 import { ErrorMessage } from "@/components/form/InfoMessage";
 import Slogan from "@/components/login/Slogan";
 import { useAppDispatch } from "@/lib/store/hooks";
-import { setUser } from "@/lib/store/features/session/sessionSlice";
+import { setTasks, setUser } from "@/lib/store/features/session/sessionSlice";
 import { useRouter } from "next/navigation";
 
 interface ILoginError {
@@ -43,6 +43,7 @@ export default function Login() {
       if (data.success) {
         //redirect to user dashboard
         dispatch(setUser(data.session.user));
+        dispatch(setTasks(data.session.tasks));
         router.push("/dashboard");
       } else {
         setError({

@@ -1,3 +1,5 @@
+import { Tasks } from "@/models/Task";
+import { TTask } from "@/types";
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
@@ -9,10 +11,12 @@ type SessionUser = {
 
 export interface ISessionState {
   user: SessionUser | null;
+  tasks: TTask[];
 }
 
 export const initialState: ISessionState = {
   user: null,
+  tasks: [],
 };
 
 const sessionSlice = createSlice({
@@ -26,13 +30,23 @@ const sessionSlice = createSlice({
     disconnect() {
       return initialState;
     },
+    setTasks(state: ISessionState, action: PayloadAction<TTask[]>) {
+      state.tasks = action.payload;
+      return state;
+    },
+    addTask(state: ISessionState, action: PayloadAction<TTask>) {
+      state.tasks.push(action.payload);
+      return state;
+    },
   },
 
   selectors: {
     selectUser: (state) => state.user,
+    selectTasks: (state) => state.tasks,
+    selectUserId: (state) => state.user!.id,
   },
 });
 
-export const { setUser, disconnect } = sessionSlice.actions;
-export const { selectUser } = sessionSlice.selectors;
+export const { setUser, disconnect, setTasks, addTask } = sessionSlice.actions;
+export const { selectUser, selectUserId, selectTasks } = sessionSlice.selectors;
 export default sessionSlice;
