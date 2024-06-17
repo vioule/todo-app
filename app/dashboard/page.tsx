@@ -5,9 +5,10 @@ import Navbar from "@/components/Navbar";
 import AddTask from "@/components/AddTask";
 import {
   selectOverlay,
-  setValue,
+  setOverlayValue,
 } from "@/lib/store/features/overlay/overlaySlice";
 import Tasks from "@/components/Tasks";
+import DeleteTask from "@/components/DeleteTask";
 
 export default function Dashboard() {
   const user = useAppSelector(selectUser);
@@ -28,7 +29,7 @@ export default function Dashboard() {
           <div className="w-full flex justify-end p-4 text-sm">
             <button
               className="p-2 px-4 bg-primary text-white rounded-md hover:bg-primary-darken"
-              onClick={() => dispatch(setValue("create"))}
+              onClick={() => dispatch(setOverlayValue("create"))}
             >
               Add Task
             </button>
@@ -37,6 +38,7 @@ export default function Dashboard() {
         </div>
       </div>
       {overlay.value === "create" && <AddTask />}
+      {overlay.value === "delete" && <DeleteTask />}
     </div>
   );
 }

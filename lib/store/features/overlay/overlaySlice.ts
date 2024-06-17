@@ -5,11 +5,13 @@ type OverlayValue = "create" | "update" | "delete" | null;
 
 export interface IOverlayState {
   value: OverlayValue;
+  taskId: string;
   loading: boolean;
 }
 
 export const overlayInitialState: IOverlayState = {
   value: null,
+  taskId: "",
   loading: false,
 };
 
@@ -17,11 +19,15 @@ const overlaySlice = createSlice({
   name: "overlay",
   initialState: overlayInitialState,
   reducers: {
-    setValue(state, action: PayloadAction<OverlayValue>) {
+    setOverlayValue(state, action: PayloadAction<OverlayValue>) {
       state.value = action.payload;
       return state;
     },
-    setLoading(state, action: PayloadAction<boolean>) {
+    setOverlayTaskId(state, action: PayloadAction<string>) {
+      state.taskId = action.payload;
+      return state;
+    },
+    setOverlayLoading(state, action: PayloadAction<boolean>) {
       state.loading = action.payload;
       return state;
     },
@@ -29,12 +35,18 @@ const overlaySlice = createSlice({
 
   selectors: {
     selectOverlay: (state) => state,
-    selectValue: (state) => state.value,
-    selectLoading: (state) => state.loading,
+    selectOverlayValue: (state) => state.value,
+    selectOverlayTaskId: (state) => state.taskId,
+    selectOverlayLoading: (state) => state.loading,
   },
 });
 
-export const { setValue, setLoading } = overlaySlice.actions;
-export const { selectOverlay, selectValue, selectLoading } =
-  overlaySlice.selectors;
+export const { setOverlayValue, setOverlayTaskId, setOverlayLoading } =
+  overlaySlice.actions;
+export const {
+  selectOverlay,
+  selectOverlayValue,
+  selectOverlayTaskId,
+  selectOverlayLoading,
+} = overlaySlice.selectors;
 export default overlaySlice;

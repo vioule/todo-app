@@ -1,9 +1,9 @@
 import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
 import CloseButton from "./CloseButton";
 import {
-  selectLoading,
-  setLoading,
-  setValue,
+  selectOverlayLoading,
+  setOverlayLoading,
+  setOverlayValue,
 } from "@/lib/store/features/overlay/overlaySlice";
 import { useState } from "react";
 import {
@@ -24,7 +24,7 @@ interface ICreateTaskError {
 export default function AddTask() {
   const dispatch = useAppDispatch();
   const userId = useAppSelector(selectUserId);
-  const isLoading = useAppSelector(selectLoading);
+  const isLoading = useAppSelector(selectOverlayLoading);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [error, setError] = useState<ICreateTaskError>({
@@ -35,17 +35,17 @@ export default function AddTask() {
   const handleOnClick = async () => {
     try {
       CreateTaskSchema.parse({ title, description });
-      dispatch(setLoading(true));
+      dispatch(setOverlayLoading(true));
       const response = await fetch("/api/task", {
         method: "POST",
         body: JSON.stringify({ userId, title, description }),
       });
 
       const data = await response.json();
-      dispatch(setLoading(false));
+      dispatch(setOverlayLoading(false));
       if (data.success) {
         dispatch(addTask(data.task));
-        dispatch(setValue(null));
+        dispatch(setOverlayValue(null));
       } else {
         setError({
           title: null,
@@ -74,7 +74,7 @@ export default function AddTask() {
       <div className="w-full bg-white rounded-lg max-w-[700px] p-6 flex flex-col gap-4 m-auto">
         <div className="flex justify-between">
           <h2 className="font-bold tracking-wider text-xl">Create new task</h2>
-          <CloseButton onClick={() => dispatch(setValue(null))} />
+          <CloseButton onClick={() => dispatch(setOverlayValue(null))} />
         </div>
         <div className="grow flex justify-center flex-col gap-3">
           <div className="w-full">

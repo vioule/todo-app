@@ -38,6 +38,10 @@ const sessionSlice = createSlice({
       state.tasks.push(action.payload);
       return state;
     },
+    deleteTask(state: ISessionState, action: PayloadAction<string>) {
+      state.tasks = state.tasks.filter((task) => task._id !== action.payload);
+      return state;
+    },
   },
 
   selectors: {
@@ -47,6 +51,7 @@ const sessionSlice = createSlice({
   },
 });
 
-export const { setUser, disconnect, setTasks, addTask } = sessionSlice.actions;
+export const { setUser, disconnect, setTasks, addTask, deleteTask } =
+  sessionSlice.actions;
 export const { selectUser, selectUserId, selectTasks } = sessionSlice.selectors;
 export default sessionSlice;

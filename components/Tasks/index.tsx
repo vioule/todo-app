@@ -14,6 +14,7 @@ export default function Tasks() {
               key={task._id}
               title={task.title}
               description={task.description}
+              id={task._id}
             />
           ))}
         </>

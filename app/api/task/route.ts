@@ -4,7 +4,7 @@ import * as jose from "jose";
 import dbConnect from "@/lib/db";
 import User, { Users } from "@/models/User";
 import { JWTPayload } from "@/actions/session";
-import Task from "@/models/Task";
+import Task, { Tasks } from "@/models/Task";
 
 export async function POST(request: NextRequest) {
   try {
@@ -34,6 +34,30 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({
       message: "Task created successfully.",
       task,
+      success: true,
+    });
+  } catch (error: any) {
+    return Response.json({ error }, { status: 500 });
+  }
+}
+
+export async function DELETE(request: NextRequest) {
+  try {
+    // check if user is logged
+    const jwt = request.cookies.get("jwt");
+    await jose.jwtVerify<JWTPayload>(jwt!.value, JWT_SECRET);
+
+    const { taskId } = await request.json();
+    await dbConnect();
+    const result = await Task.deleteOne({ _id: taskId });
+    if (result.deletedCount === 0) {
+      return Response.json(
+        { error: "Cannot find the task to delete." },
+        { status: 401 }
+      );
+    }
+    return NextResponse.json({
+      message: "Task deleted successfully.",
       success: true,
     });
   } catch (error: any) {
