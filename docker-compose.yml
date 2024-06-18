@@ -27,3 +27,9 @@ services:
       default:
         aliases:
           - todoapp-database
+  mailhog:
+    image: mailhog/mailhog
+    container_name: todoapp-mailhog-container
+    ports:
+      - "1025:1025"
+      - "8025:8025"
