@@ -13,9 +13,15 @@ interface ITask {
 export default function Task({ task }: ITask) {
   const dispatch = useAppDispatch();
   return (
-    <div className=" max-w-[300px] border-[1px] p-4 rounded-md flex flex-col gap-2 h-[200px]">
-      <div className="text-lg font-semibold">{task.title}</div>
-      <div className="text-md">{task.description}</div>
+    <div className=" basis-[300px] max-w-[300px] border-[1px] p-6 rounded-md flex flex-col justify-between gap-2">
+      <div className="flex flex-col gap-2">
+        <div className="text-lg font-semibold max-h-16 overflow-hidden">
+          {task.title}
+        </div>
+        <div className="text-md max-h-[9rem] overflow-hidden text-sm">
+          {task.description}
+        </div>
+      </div>
       <div className="flex gap-2">
         <button
           className="flex items-center border-[1px] p-2 rounded-md hover:text-blue-600 hover:bg-slate-50"

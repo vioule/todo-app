@@ -18,7 +18,7 @@ export default function Dashboard() {
 
   return (
     <div className="h-screen w-screen flex flex-col max-w-[1920px]">
-      <header className="w-full p-4 flex justify-between items-center  border-b-[1px]">
+      <header className="w-full p-4 flex justify-between items-center  border-b-[1px] flex-grow-0">
         <div className="w-[2rem] h-[2rem] bg-primary"></div>
         <div>
           <div className="text-md font-semibold">{user?.username}</div>
@@ -26,7 +26,7 @@ export default function Dashboard() {
       </header>
       <div className="grow flex flex-row overflow-hidden">
         <Navbar />
-        <div className="w-full h-full flex flex-row flex-wrap justify-start">
+        <div className="w-full h-full flex flex-col justify-start">
           <div className="w-full flex justify-end p-4 text-sm">
             <button
               className="p-2 px-4 bg-primary text-white rounded-md hover:bg-primary-darken"
