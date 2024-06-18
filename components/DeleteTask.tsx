@@ -3,7 +3,7 @@ import {
   selectOverlayLoading,
   selectOverlayTaskId,
   setOverlayLoading,
-  setOverlayTaskId,
+  setOverlayTask,
   setOverlayValue,
 } from "@/lib/store/features/overlay/overlaySlice";
 import { deleteTask } from "@/lib/store/features/session/sessionSlice";
@@ -26,9 +26,9 @@ export default function DeleteTask() {
       const data = await response.json();
       dispatch(setOverlayLoading(false));
       if (data.success) {
-        dispatch(deleteTask(taskId));
+        dispatch(deleteTask(taskId!));
         dispatch(setOverlayValue(null));
-        dispatch(setOverlayTaskId(""));
+        dispatch(setOverlayTask(null));
       }
     } catch (err) {}
   };
@@ -41,7 +41,7 @@ export default function DeleteTask() {
           <CloseButton
             onClick={() => {
               dispatch(setOverlayValue(null));
-              dispatch(setOverlayTaskId(""));
+              dispatch(setOverlayTask(null));
             }}
           />
         </div>

@@ -10,12 +10,7 @@ export default function Tasks() {
       {tasks.length ? (
         <>
           {tasks.map((task) => (
-            <Task
-              key={task._id}
-              title={task.title}
-              description={task.description}
-              id={task._id}
-            />
+            <Task key={task._id} task={task} />
           ))}
         </>
       ) : (

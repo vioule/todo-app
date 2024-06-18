@@ -1,3 +1,4 @@
+import { TTask } from "@/types";
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
@@ -5,13 +6,13 @@ type OverlayValue = "create" | "update" | "delete" | null;
 
 export interface IOverlayState {
   value: OverlayValue;
-  taskId: string;
+  task: TTask | null;
   loading: boolean;
 }
 
 export const overlayInitialState: IOverlayState = {
   value: null,
-  taskId: "",
+  task: null,
   loading: false,
 };
 
@@ -23,8 +24,8 @@ const overlaySlice = createSlice({
       state.value = action.payload;
       return state;
     },
-    setOverlayTaskId(state, action: PayloadAction<string>) {
-      state.taskId = action.payload;
+    setOverlayTask(state, action: PayloadAction<TTask | null>) {
+      state.task = action.payload;
       return state;
     },
     setOverlayLoading(state, action: PayloadAction<boolean>) {
@@ -36,16 +37,18 @@ const overlaySlice = createSlice({
   selectors: {
     selectOverlay: (state) => state,
     selectOverlayValue: (state) => state.value,
-    selectOverlayTaskId: (state) => state.taskId,
+    selectOverlayTask: (state) => state.task,
+    selectOverlayTaskId: (state) => state.task?._id,
     selectOverlayLoading: (state) => state.loading,
   },
 });
 
-export const { setOverlayValue, setOverlayTaskId, setOverlayLoading } =
+export const { setOverlayValue, setOverlayTask, setOverlayLoading } =
   overlaySlice.actions;
 export const {
   selectOverlay,
   selectOverlayValue,
+  selectOverlayTask,
   selectOverlayTaskId,
   selectOverlayLoading,
 } = overlaySlice.selectors;

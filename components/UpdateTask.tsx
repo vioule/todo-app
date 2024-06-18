@@ -1,32 +1,26 @@
 import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
-import CloseButton from "./CloseButton";
 import {
   selectOverlayLoading,
+  selectOverlayTask,
   setOverlayLoading,
+  setOverlayTask,
   setOverlayValue,
 } from "@/lib/store/features/overlay/overlaySlice";
 import { useState } from "react";
-import {
-  addTask,
-  selectUserId,
-} from "@/lib/store/features/session/sessionSlice";
+import { updateTask } from "@/lib/store/features/session/sessionSlice";
 import { CreateTaskSchema } from "@/schemas/Task";
-import { TInfoMessage } from "@/types";
 import { z } from "zod";
-import Spinner from "../icons/Spinner";
-import { ErrorMessage } from "../form/InfoMessage";
+import { ICreateTaskError } from "./AddTask";
+import { ErrorMessage } from "./form/InfoMessage";
+import Spinner from "./icons/Spinner";
+import CloseButton from "./AddTask/CloseButton";
 
-export interface ICreateTaskError {
-  title: TInfoMessage;
-  description: TInfoMessage;
-}
-
-export default function AddTask() {
+export default function UpdateTask() {
   const dispatch = useAppDispatch();
-  const userId = useAppSelector(selectUserId);
+  const task = useAppSelector(selectOverlayTask);
   const isLoading = useAppSelector(selectOverlayLoading);
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
+  const [title, setTitle] = useState(task!.title);
+  const [description, setDescription] = useState(task!.description);
   const [error, setError] = useState<ICreateTaskError>({
     title: null,
     description: null,
@@ -37,15 +31,16 @@ export default function AddTask() {
       CreateTaskSchema.parse({ title, description });
       dispatch(setOverlayLoading(true));
       const response = await fetch("/api/task", {
-        method: "POST",
-        body: JSON.stringify({ userId, title, description }),
+        method: "PUT",
+        body: JSON.stringify({ taskId: task!._id, title, description }),
       });
 
       const data = await response.json();
       dispatch(setOverlayLoading(false));
       if (data.success) {
-        dispatch(addTask(data.task));
+        dispatch(updateTask({ ...task!, title, description }));
         dispatch(setOverlayValue(null));
+        dispatch(setOverlayTask(null));
       } else {
         setError({
           title: null,
@@ -73,8 +68,13 @@ export default function AddTask() {
     <div className="w-screen h-screen absolute top-0 left-0 backdrop-blur-md p-10 flex text-slate-600 overflow-y-auto">
       <div className="w-full bg-white rounded-lg max-w-[700px] p-6 flex flex-col gap-4 m-auto">
         <div className="flex justify-between">
-          <h2 className="font-bold tracking-wider text-xl">Create new task</h2>
-          <CloseButton onClick={() => dispatch(setOverlayValue(null))} />
+          <h2 className="font-bold tracking-wider text-xl">Update task</h2>
+          <CloseButton
+            onClick={() => {
+              dispatch(setOverlayValue(null));
+              dispatch(setOverlayTask(null));
+            }}
+          />
         </div>
         <div className="grow flex justify-center flex-col gap-3">
           <div className="w-full">
@@ -104,7 +104,7 @@ export default function AddTask() {
           className="p-2 w-full rounded-lg flex items-center font-semibold justify-center hover:bg-primary-darken text-white bg-primary tracking-wider"
           onClick={handleOnClick}
         >
-          Save
+          Update
         </button>
       </div>
       {isLoading && (

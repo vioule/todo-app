@@ -64,3 +64,32 @@ export async function DELETE(request: NextRequest) {
     return Response.json({ error }, { status: 500 });
   }
 }
+
+export async function PUT(request: NextRequest) {
+  try {
+    // check if user is logged
+    const jwt = request.cookies.get("jwt");
+    await jose.jwtVerify<JWTPayload>(jwt!.value, JWT_SECRET);
+
+    const { taskId, title, description } = await request.json();
+    await dbConnect();
+    const result = await Task.updateOne(
+      { _id: taskId },
+      { title, description }
+    );
+
+    if (result.modifiedCount === 0) {
+      return Response.json(
+        { error: "Cannot find the task to update." },
+        { status: 401 }
+      );
+    }
+
+    return NextResponse.json({
+      message: "Task updated successfully.",
+      success: true,
+    });
+  } catch (error: any) {
+    return Response.json({ error }, { status: 500 });
+  }
+}

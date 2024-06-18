@@ -38,6 +38,15 @@ const sessionSlice = createSlice({
       state.tasks.push(action.payload);
       return state;
     },
+    updateTask(state: ISessionState, action: PayloadAction<TTask>) {
+      state.tasks = state.tasks.map((task) => {
+        if (task._id === action.payload._id) {
+          return action.payload;
+        }
+        return task;
+      });
+      return state;
+    },
     deleteTask(state: ISessionState, action: PayloadAction<string>) {
       state.tasks = state.tasks.filter((task) => task._id !== action.payload);
       return state;
@@ -47,11 +56,20 @@ const sessionSlice = createSlice({
   selectors: {
     selectUser: (state) => state.user,
     selectTasks: (state) => state.tasks,
+    selectTaskById: (state, id: string) =>
+      state.tasks.find((task) => task._id === id),
     selectUserId: (state) => state.user!.id,
   },
 });
 
-export const { setUser, disconnect, setTasks, addTask, deleteTask } =
-  sessionSlice.actions;
-export const { selectUser, selectUserId, selectTasks } = sessionSlice.selectors;
+export const {
+  setUser,
+  disconnect,
+  setTasks,
+  addTask,
+  updateTask,
+  deleteTask,
+} = sessionSlice.actions;
+export const { selectUser, selectUserId, selectTasks, selectTaskById } =
+  sessionSlice.selectors;
 export default sessionSlice;

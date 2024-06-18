@@ -9,6 +9,7 @@ import {
 } from "@/lib/store/features/overlay/overlaySlice";
 import Tasks from "@/components/Tasks";
 import DeleteTask from "@/components/DeleteTask";
+import UpdateTask from "@/components/UpdateTask";
 
 export default function Dashboard() {
   const user = useAppSelector(selectUser);
@@ -38,6 +39,7 @@ export default function Dashboard() {
         </div>
       </div>
       {overlay.value === "create" && <AddTask />}
+      {overlay.value === "update" && <UpdateTask />}
       {overlay.value === "delete" && <DeleteTask />}
     </div>
   );
